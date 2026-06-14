@@ -3,6 +3,7 @@ import { Section } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ui/product-card";
 import { products } from "@/data/products";
+import { RevealStagger, RevealItem, Reveal } from "@/components/effects/reveal";
 
 export function FeaturedProducts() {
   const featured = products.slice(0, 4);
@@ -14,18 +15,25 @@ export function FeaturedProducts() {
       title="Hand-picked, in stock, ready to ship."
       subtitle="Our team checks pricing and stock every morning. If it's listed here, it's available — and we'll send it out today inside Lahore."
     >
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <RevealStagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {featured.map((p) => (
-          <ProductCard key={p.id} product={p} />
+          <RevealItem key={p.id}>
+            <ProductCard product={p} />
+          </RevealItem>
         ))}
-      </div>
+      </RevealStagger>
 
-      <div className="mt-12 flex justify-center">
-        <Button href="/collections/all" variant="outline" size="lg">
+      <Reveal className="mt-12 flex justify-center" delay={0.1}>
+        <Button
+          href="/collections/all"
+          variant="outline"
+          size="lg"
+          data-cursor="view"
+        >
           See all products
           <ArrowRight className="h-4 w-4" />
         </Button>
-      </div>
+      </Reveal>
     </Section>
   );
 }

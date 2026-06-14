@@ -8,12 +8,10 @@ type Size = "sm" | "md" | "lg";
 const variantClass: Record<Variant, string> = {
   primary:
     "bg-copper text-white hover:bg-copper-600 shadow-soft hover:shadow-lift",
-  ghost:
-    "bg-transparent text-graphite hover:bg-graphite-50",
+  ghost: "bg-transparent text-graphite hover:bg-graphite-50",
   outline:
     "border border-graphite text-graphite bg-transparent hover:bg-graphite hover:text-white",
-  dark:
-    "bg-graphite text-white hover:bg-graphite-700",
+  dark: "bg-graphite text-white hover:bg-graphite-700",
 };
 
 const sizeClass: Record<Size, string> = {
@@ -30,24 +28,33 @@ type CommonProps = {
   size?: Size;
   className?: string;
   children: React.ReactNode;
+  "data-cursor"?: string;
 };
 
 type ButtonAsButton = CommonProps &
-  React.ButtonHTMLAttributes<HTMLButtonElement> & { href?: undefined };
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children"> & {
+    href?: undefined;
+  };
 
-type ButtonAsLink = CommonProps & {
-  href: string;
-  target?: string;
-  rel?: string;
-};
+type ButtonAsLink = CommonProps &
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "children" | "href"> & {
+    href: string;
+  };
 
 export function Button(props: ButtonAsButton | ButtonAsLink) {
-  const { variant = "primary", size = "md", className, children } = props;
+  const {
+    variant = "primary",
+    size = "md",
+    className,
+    children,
+  } = props;
   const classes = cn(base, variantClass[variant], sizeClass[size], className);
+  const cursor = props["data-cursor"];
 
   if ("href" in props && props.href) {
     const { href, target, rel } = props;
-    const isExternal = href.startsWith("http") || href.startsWith("https://wa.me");
+    const isExternal =
+      href.startsWith("http") || href.startsWith("https://wa.me");
     if (isExternal) {
       return (
         <a
@@ -55,20 +62,26 @@ export function Button(props: ButtonAsButton | ButtonAsLink) {
           target={target ?? "_blank"}
           rel={rel ?? "noopener noreferrer"}
           className={classes}
+          data-cursor={cursor}
         >
           {children}
         </a>
       );
     }
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} data-cursor={cursor}>
         {children}
       </Link>
     );
   }
 
-  const { variant: _v, size: _s, className: _c, children: _ch, ...rest } =
-    props as ButtonAsButton;
+  const {
+    variant: _v,
+    size: _s,
+    className: _c,
+    children: _ch,
+    ...rest
+  } = props as ButtonAsButton;
   return (
     <button className={classes} {...rest}>
       {children}

@@ -1,4 +1,5 @@
 import { Section } from "@/components/ui/section";
+import { RevealStagger, RevealItem } from "@/components/effects/reveal";
 
 const faqs = [
   {
@@ -34,10 +35,11 @@ export function FAQ() {
       eyebrow="Common questions"
       title="Everything Lahore buyers ask before placing an order."
     >
-      <div className="grid gap-4 lg:grid-cols-2">
+      <RevealStagger className="grid gap-4 lg:grid-cols-2">
         {faqs.map((f) => (
+          <RevealItem key={f.q}>
           <details
-            key={f.q}
+            data-cursor="read"
             className="group rounded-xl border border-mist bg-porcelain/40 p-6 transition-colors hover:bg-porcelain"
           >
             <summary className="cursor-pointer list-none font-display text-h3 font-medium text-graphite [&::-webkit-details-marker]:hidden flex items-start justify-between gap-4">
@@ -51,8 +53,9 @@ export function FAQ() {
             </summary>
             <p className="mt-3 text-small text-slate text-pretty">{f.a}</p>
           </details>
+          </RevealItem>
         ))}
-      </div>
+      </RevealStagger>
     </Section>
   );
 }

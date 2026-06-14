@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { categories } from "@/data/categories";
+import { RevealStagger, RevealItem } from "@/components/effects/reveal";
 
 const accents = [
   "from-copper/20 to-copper/0",
@@ -19,12 +20,13 @@ export function CategoryGrid() {
       title="Everything for a Pakistani home."
       subtitle="From the rasoi to the drawing room — the brands you trust, at prices you can verify."
     >
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <RevealStagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((c, i) => (
+          <RevealItem key={c.slug}>
           <Link
-            key={c.slug}
             href={`/collections/${c.seoSlug}`}
-            className={`group relative overflow-hidden rounded-xl border border-mist bg-white p-7 transition-all duration-500 ease-premium hover:-translate-y-1 hover:shadow-lift hover:border-graphite-200`}
+            data-cursor="view"
+            className={`group relative block h-full overflow-hidden rounded-xl border border-mist bg-white p-7 transition-all duration-500 ease-premium hover:-translate-y-1 hover:shadow-lift hover:border-graphite-200`}
           >
             <div
               className={`absolute inset-0 bg-gradient-to-br ${accents[i % accents.length]} opacity-60 transition-opacity duration-500 group-hover:opacity-100`}
@@ -54,8 +56,9 @@ export function CategoryGrid() {
               </div>
             </div>
           </Link>
+          </RevealItem>
         ))}
-      </div>
+      </RevealStagger>
     </Section>
   );
 }

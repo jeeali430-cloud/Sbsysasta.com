@@ -1,12 +1,13 @@
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { CreditCard, FileCheck, Clock } from "lucide-react";
+import { Reveal } from "@/components/effects/reveal";
 
 export function InstallmentsCTA() {
   return (
     <section className="py-16 sm:py-20">
       <Container>
-        <div className="overflow-hidden rounded-2xl border border-mist bg-gradient-to-br from-white via-porcelain to-copper-50">
+        <Reveal className="overflow-hidden rounded-2xl border border-mist bg-gradient-to-br from-white via-porcelain to-copper-50">
           <div className="grid items-center gap-8 p-8 sm:p-12 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-7">
               <p className="text-caption uppercase tracking-[0.18em] text-copper font-medium">
@@ -37,13 +38,19 @@ export function InstallmentsCTA() {
               </ul>
 
               <div className="mt-7 flex flex-wrap gap-3">
-                <Button href="/installments" variant="primary" size="lg">
+                <Button
+                  href="/installments"
+                  variant="primary"
+                  size="lg"
+                  data-cursor="read"
+                >
                   Check installment plans
                 </Button>
                 <Button
                   href="https://wa.me/923202785197?text=Salam!%20I%20want%20to%20buy%20on%20installments."
                   variant="ghost"
                   size="lg"
+                  data-cursor="wa"
                 >
                   Apply on WhatsApp
                 </Button>
@@ -71,7 +78,7 @@ export function InstallmentsCTA() {
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

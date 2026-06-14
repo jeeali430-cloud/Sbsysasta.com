@@ -1,5 +1,6 @@
 import { Section } from "@/components/ui/section";
 import { categories } from "@/data/categories";
+import { Reveal, RevealStagger, RevealItem } from "@/components/effects/reveal";
 
 const points = [
   {
@@ -28,9 +29,9 @@ export function WhyChooseUs() {
       subtitle="Sbsysasta.com is run by a small team in Lahore that has been selling home appliances since 2014. Here's what that means for you."
     >
       <div className="grid gap-10 lg:grid-cols-2">
-        <div className="grid gap-5 sm:grid-cols-2">
+        <RevealStagger className="grid gap-5 sm:grid-cols-2">
           {points.map((p) => (
-            <div
+            <RevealItem
               key={p.title}
               className="rounded-xl border border-mist bg-white p-6"
             >
@@ -38,11 +39,11 @@ export function WhyChooseUs() {
                 {p.title}
               </h3>
               <p className="mt-2 text-small text-slate text-pretty">{p.body}</p>
-            </div>
+            </RevealItem>
           ))}
-        </div>
+        </RevealStagger>
 
-        <div className="rounded-xl border border-mist bg-white p-7">
+        <Reveal className="rounded-xl border border-mist bg-white p-7" delay={0.1}>
           <h3 className="font-display text-h2 font-semibold text-graphite">
             Categories & brands we carry
           </h3>
@@ -74,7 +75,7 @@ export function WhyChooseUs() {
               ))}
             </tbody>
           </table>
-        </div>
+        </Reveal>
       </div>
     </Section>
   );

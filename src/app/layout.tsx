@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { site } from "@/data/site";
 import { organizationJsonLd } from "@/lib/seo";
+import { Cursor } from "@/components/effects/cursor";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -57,6 +58,7 @@ export default function RootLayout({
     <html lang="en-PK" className={inter.variable}>
       <body>
         {children}
+        <Cursor />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
