@@ -2,19 +2,20 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { MessageCircle, ShoppingBag } from "lucide-react";
+import { MessageCircle, ShoppingBag, Check } from "lucide-react";
 import { formatPKR } from "@/lib/utils";
 import { whatsappLink } from "@/data/site";
+import { useCart } from "@/components/cart/cart-provider";
+import type { Product } from "@/data/products";
 
 type Props = {
-  title: string;
-  brand: string;
-  image: string;
-  price: number;
-  originalPrice?: number;
+  product: Product;
 };
 
-export function StickyBar({ title, brand, image, price, originalPrice }: Props) {
+export function StickyBar({ product }: Props) {
+  const { title, brand, image, price, originalPrice } = product;
+  const { add } = useCart();
+  const [added, setAdded] = useState(false);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -68,10 +69,24 @@ export function StickyBar({ title, brand, image, price, originalPrice }: Props) 
           <button
             type="button"
             data-cursor="cart"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-copper text-small font-medium text-white"
+            onClick={() => {
+              add(product, 1);
+              setAdded(true);
+              setTimeout(() => setAdded(false), 1400);
+            }}
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-copper text-small font-medium text-white transition-colors"
           >
-            <ShoppingBag className="h-4 w-4" />
-            Add to Cart
+            {added ? (
+              <>
+                <Check className="h-4 w-4" />
+                Added
+              </>
+            ) : (
+              <>
+                <ShoppingBag className="h-4 w-4" />
+                Add to Cart
+              </>
+            )}
           </button>
         </div>
       </div>

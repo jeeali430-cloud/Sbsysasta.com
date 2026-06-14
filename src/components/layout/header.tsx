@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Phone, Search, ShoppingBag, User, Menu } from "lucide-react";
+import { Phone, Search, User, Menu } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { site, whatsappLink } from "@/data/site";
 import { categories } from "@/data/categories";
+import { CartButton } from "@/components/cart/cart-button";
 
 export function Header() {
   return (
@@ -82,14 +83,7 @@ export function Header() {
             >
               <User className="h-5 w-5" />
             </Link>
-            <Link
-              href="/cart"
-              aria-label="Cart"
-              className="relative rounded-full p-2.5 text-graphite hover:bg-graphite-50 transition-colors"
-            >
-              <ShoppingBag className="h-5 w-5" />
-              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-copper" />
-            </Link>
+            <CartButton />
             <button
               aria-label="Menu"
               className="lg:hidden rounded-full p-2.5 text-graphite hover:bg-graphite-50 transition-colors"

@@ -6,7 +6,6 @@ import {
   Wallet,
   RefreshCcw,
   MessageCircle,
-  ShoppingBag,
   Star,
 } from "lucide-react";
 import { Header } from "@/components/layout/header";
@@ -16,6 +15,7 @@ import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { Price } from "@/components/ui/price";
 import { Button } from "@/components/ui/button";
+import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { Breadcrumbs } from "@/components/collections/breadcrumbs";
 import { ProductGallery } from "@/components/products/gallery";
 import { SpecsTable } from "@/components/products/specs-table";
@@ -205,15 +205,11 @@ export default function ProductPage({ params }: Props) {
               </div>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button
+                <AddToCartButton
+                  product={product}
                   variant="primary"
-                  size="lg"
-                  data-cursor="cart"
                   className="flex-1 min-w-[200px]"
-                >
-                  <ShoppingBag className="h-4 w-4" />
-                  Add to Cart
-                </Button>
+                />
                 <Button
                   href={whatsappLink(waMessage)}
                   variant="dark"
@@ -297,13 +293,7 @@ export default function ProductPage({ params }: Props) {
         {related.length > 0 && <RelatedProducts items={related} />}
       </main>
 
-      <StickyBar
-        title={product.title}
-        brand={product.brand}
-        image={product.image}
-        price={product.price}
-        originalPrice={product.originalPrice}
-      />
+      <StickyBar product={product} />
 
       <Footer />
       <WhatsAppButton productName={product.title} />

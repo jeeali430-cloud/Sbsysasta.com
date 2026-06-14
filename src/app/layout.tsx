@@ -4,6 +4,8 @@ import "./globals.css";
 import { site } from "@/data/site";
 import { organizationJsonLd } from "@/lib/seo";
 import { Cursor } from "@/components/effects/cursor";
+import { CartProvider } from "@/components/cart/cart-provider";
+import { CartDrawer } from "@/components/cart/cart-drawer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -57,7 +59,10 @@ export default function RootLayout({
   return (
     <html lang="en-PK" className={inter.variable}>
       <body>
-        {children}
+        <CartProvider>
+          {children}
+          <CartDrawer />
+        </CartProvider>
         <Cursor />
         <script
           type="application/ld+json"

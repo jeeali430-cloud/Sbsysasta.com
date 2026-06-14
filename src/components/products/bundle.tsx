@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Plus, ArrowRight } from "lucide-react";
+import { Plus } from "lucide-react";
 import type { Product } from "@/data/products";
 import { formatPKR } from "@/lib/utils";
+import { BundleCta } from "./bundle-cta";
 
 export function Bundle({
   primary,
@@ -80,14 +81,7 @@ export function Bundle({
                 Save {formatPKR(savings)} vs. buying separately
               </p>
             )}
-            <button
-              type="button"
-              data-cursor="cart"
-              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-graphite text-white h-12 text-body font-medium hover:bg-graphite-700 transition-colors"
-            >
-              Add bundle to cart
-              <ArrowRight className="h-4 w-4" />
-            </button>
+            <BundleCta products={all} />
             <p className="mt-3 text-caption text-graphite-400">
               Free delivery in Lahore on bundles over ₨ 50,000.
             </p>
