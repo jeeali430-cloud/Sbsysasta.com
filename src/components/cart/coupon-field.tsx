@@ -3,23 +3,33 @@
 import { useState } from "react";
 import { Check, Tag, X } from "lucide-react";
 import { useCart } from "./cart-provider";
-import { findCoupon } from "@/data/coupons";
 
 export function CouponField() {
   const { coupon, applyCoupon, removeCoupon } = useCart();
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const c = findCoupon(code);
-    if (!c) {
-      setError("That code isn't valid right now.");
-      return;
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `/api/coupons/${encodeURIComponent(code.trim().toUpperCase())}`
+      );
+      if (!res.ok) {
+        setError("That code isn't valid right now.");
+        return;
+      }
+      const body = (await res.json()) as { coupon: Parameters<typeof applyCoupon>[0] };
+      applyCoupon(body.coupon);
+      setError(null);
+      setCode("");
+    } catch {
+      setError("Couldn't reach the server. Try again.");
+    } finally {
+      setLoading(false);
     }
-    applyCoupon(c);
-    setError(null);
-    setCode("");
   }
 
   if (coupon) {
@@ -62,9 +72,9 @@ export function CouponField() {
         <button
           type="submit"
           className="rounded-full bg-graphite px-4 h-10 text-small font-medium text-white hover:bg-graphite-700 transition-colors disabled:opacity-50"
-          disabled={!code.trim()}
+          disabled={!code.trim() || loading}
         >
-          Apply
+          {loading ? "…" : "Apply"}
         </button>
       </label>
       {error && <p className="text-caption text-carmine">{error}</p>}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/ui/section";
-import { categories } from "@/data/categories";
+import { listCategories } from "@/lib/repo/categories";
 import { RevealStagger, RevealItem } from "@/components/effects/reveal";
 
 const accents = [
@@ -13,7 +13,8 @@ const accents = [
   "from-saffron/15 to-saffron/0",
 ];
 
-export function CategoryGrid() {
+export async function CategoryGrid() {
+  const categories = await listCategories();
   return (
     <Section
       eyebrow="Shop by category"

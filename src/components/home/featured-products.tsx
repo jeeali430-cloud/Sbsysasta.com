@@ -2,11 +2,12 @@ import { ArrowRight } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ui/product-card";
-import { products } from "@/data/products";
+import { listProducts } from "@/lib/repo/products";
 import { RevealStagger, RevealItem, Reveal } from "@/components/effects/reveal";
 
-export function FeaturedProducts() {
-  const featured = products.slice(0, 4);
+export async function FeaturedProducts() {
+  const all = await listProducts();
+  const featured = all.slice(0, 4);
 
   return (
     <Section

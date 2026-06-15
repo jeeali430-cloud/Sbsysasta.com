@@ -25,25 +25,25 @@ import { RelatedProducts } from "@/components/products/related-products";
 import { Bundle } from "@/components/products/bundle";
 import { Reveal } from "@/components/effects/reveal";
 import {
-  products,
+  listProducts,
   getProductBySlug,
   getRelatedProducts,
   getBundleProducts,
-} from "@/data/products";
-import { getCategoryBySlug } from "@/data/categories";
-import { categories } from "@/data/categories";
+} from "@/lib/repo/products";
+import { listCategories, getCategoryBySlug } from "@/lib/repo/categories";
 import { buildMetadata } from "@/lib/seo";
 import { site, whatsappLink } from "@/data/site";
 import { formatPKR } from "@/lib/utils";
 
 type Props = { params: { slug: string } };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const products = await listProducts();
   return products.map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const product = getProductBySlug(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const product = await getProductBySlug(params.slug);
   if (!product) return {};
   return buildMetadata({
     title: `${product.title} — Price in Lahore, Pakistan`,
@@ -54,17 +54,17 @@ export function generateMetadata({ params }: Props): Metadata {
   });
 }
 
-export default function ProductPage({ params }: Props) {
-  const product = getProductBySlug(params.slug);
+export default async function ProductPage({ params }: Props) {
+  const product = await getProductBySlug(params.slug);
   if (!product) notFound();
 
-  const category =
-    categories.find((c) => c.slug === product.categorySlug) ??
-    getCategoryBySlug(product.categorySlug);
+  const [category, related, bundleExtras] = await Promise.all([
+    getCategoryBySlug(product.categorySlug),
+    getRelatedProducts(product),
+    getBundleProducts(product),
+  ]);
 
   const gallery = product.gallery?.length ? product.gallery : [product.image];
-  const related = getRelatedProducts(product);
-  const bundleExtras = getBundleProducts(product);
 
   const crumbs = [
     { href: "/", label: "Home" },

@@ -2,9 +2,10 @@ import Link from "next/link";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { site, whatsappLink } from "@/data/site";
-import { categories } from "@/data/categories";
+import { listCategories } from "@/lib/repo/categories";
 
-export function Footer() {
+export async function Footer() {
+  const categories = await listCategories();
   return (
     <footer className="bg-graphite text-porcelain">
       <Container>

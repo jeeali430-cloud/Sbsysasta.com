@@ -12,12 +12,9 @@ import { MobileFilterBar } from "@/components/collections/mobile-filter-bar";
 import { Breadcrumbs } from "@/components/collections/breadcrumbs";
 import { EmptyState } from "@/components/collections/empty-state";
 import { Reveal, RevealStagger, RevealItem } from "@/components/effects/reveal";
-import {
-  categories,
-  getCategoryBySlug,
-  type Category,
-} from "@/data/categories";
-import { products } from "@/data/products";
+import { type Category } from "@/data/categories";
+import { listCategories, getCategoryBySlug } from "@/lib/repo/categories";
+import { listProducts } from "@/lib/repo/products";
 import {
   applyFilters,
   parseFilters,
@@ -51,11 +48,14 @@ const DEALS: Category = {
   brands: [],
 };
 
-function resolveCategory(slug: string): {
+type Resolved = {
   category: Category;
-  pool: typeof products;
+  pool: Awaited<ReturnType<typeof listProducts>>;
   isVirtual: boolean;
-} | null {
+};
+
+async function resolveCategory(slug: string): Promise<Resolved | null> {
+  const products = await listProducts();
   if (slug === "all") {
     return { category: ALL, pool: products, isVirtual: true };
   }
@@ -66,7 +66,7 @@ function resolveCategory(slug: string): {
       isVirtual: true,
     };
   }
-  const category = getCategoryBySlug(slug);
+  const category = await getCategoryBySlug(slug);
   if (!category) return null;
   return {
     category,
@@ -75,7 +75,8 @@ function resolveCategory(slug: string): {
   };
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const categories = await listCategories();
   return [
     { slug: "all" },
     { slug: "deals" },
@@ -83,8 +84,8 @@ export function generateStaticParams() {
   ];
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const resolved = resolveCategory(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolved = await resolveCategory(params.slug);
   if (!resolved) return {};
   const { category } = resolved;
   const path = `/collections/${category.seoSlug}`;
@@ -101,8 +102,8 @@ export function generateMetadata({ params }: Props): Metadata {
   });
 }
 
-export default function CollectionPage({ params, searchParams }: Props) {
-  const resolved = resolveCategory(params.slug);
+export default async function CollectionPage({ params, searchParams }: Props) {
+  const resolved = await resolveCategory(params.slug);
   if (!resolved) notFound();
   const { category, pool, isVirtual } = resolved;
 

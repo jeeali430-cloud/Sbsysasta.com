@@ -2,10 +2,11 @@ import Link from "next/link";
 import { Phone, Search, User, Menu } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { site, whatsappLink } from "@/data/site";
-import { categories } from "@/data/categories";
+import { listCategories } from "@/lib/repo/categories";
 import { CartButton } from "@/components/cart/cart-button";
 
-export function Header() {
+export async function Header() {
+  const categories = await listCategories();
   return (
     <header className="sticky top-0 z-40 border-b border-mist bg-porcelain/85 backdrop-blur-md">
       <div className="bg-graphite text-porcelain">

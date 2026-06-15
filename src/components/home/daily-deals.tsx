@@ -2,11 +2,11 @@ import Link from "next/link";
 import { Flame, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { ProductCard } from "@/components/ui/product-card";
-import { getDealProducts } from "@/data/products";
+import { getDealProducts } from "@/lib/repo/products";
 import { Reveal, RevealStagger, RevealItem } from "@/components/effects/reveal";
 
-export function DailyDeals() {
-  const deals = getDealProducts();
+export async function DailyDeals() {
+  const deals = await getDealProducts();
 
   return (
     <section className="relative overflow-hidden bg-graphite py-20 text-porcelain sm:py-24">

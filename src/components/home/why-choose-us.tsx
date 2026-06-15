@@ -1,5 +1,5 @@
 import { Section } from "@/components/ui/section";
-import { categories } from "@/data/categories";
+import { listCategories } from "@/lib/repo/categories";
 import { Reveal, RevealStagger, RevealItem } from "@/components/effects/reveal";
 
 const points = [
@@ -21,7 +21,8 @@ const points = [
   },
 ];
 
-export function WhyChooseUs() {
+export async function WhyChooseUs() {
+  const categories = await listCategories();
   return (
     <Section
       eyebrow="Why Lahore shops with us"

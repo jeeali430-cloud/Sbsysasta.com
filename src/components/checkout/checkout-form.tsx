@@ -76,43 +76,73 @@ export function CheckoutForm() {
     [subtotal, discount, delivery, total]
   );
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (items.length === 0) return;
     setSubmitting(true);
 
     const data = new FormData(e.currentTarget);
+    const id = `SBS-${Date.now().toString(36).toUpperCase()}`;
+    const lineItems = items.map((i) => ({
+      id: i.id,
+      title: i.title,
+      quantity: i.quantity,
+      price: i.price,
+    }));
+
+    const customer = {
+      name: String(data.get("name") ?? ""),
+      phone: String(data.get("phone") ?? ""),
+      email: String(data.get("email") ?? ""),
+      address: String(data.get("address") ?? ""),
+      city: String(data.get("city") ?? ""),
+    };
+    const notes = String(data.get("notes") ?? "") || null;
+
     const order = {
-      id: `SBS-${Date.now().toString(36).toUpperCase()}`,
+      id,
       placedAt: new Date().toISOString(),
-      customer: {
-        name: String(data.get("name") ?? ""),
-        phone: String(data.get("phone") ?? ""),
-        email: String(data.get("email") ?? ""),
-        address: String(data.get("address") ?? ""),
-        city: String(data.get("city") ?? ""),
-      },
+      customer,
       region,
       payment: pay,
       coupon: coupon?.code ?? null,
-      items: items.map((i) => ({
-        id: i.id,
-        title: i.title,
-        quantity: i.quantity,
-        price: i.price,
-      })),
+      items: lineItems,
       ...summary,
     };
 
     try {
-      window.localStorage.setItem(`sbs-order-${order.id}`, JSON.stringify(order));
-      window.localStorage.setItem("sbs-last-order", order.id);
+      window.localStorage.setItem(`sbs-order-${id}`, JSON.stringify(order));
+      window.localStorage.setItem("sbs-last-order", id);
     } catch {
-      /* ignore storage errors */
+      /* ignore */
     }
 
+    void fetch("/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id,
+        customer_name: customer.name,
+        customer_phone: customer.phone,
+        customer_email: customer.email || null,
+        address: customer.address,
+        city: customer.city,
+        region,
+        payment_method: pay,
+        coupon_code: coupon?.code ?? null,
+        subtotal: summary.subtotal,
+        discount: summary.discount,
+        delivery: summary.delivery,
+        total: summary.total,
+        notes,
+        items: lineItems,
+      }),
+    }).catch(() => {
+      /* server persistence is best-effort — receipt lives in localStorage */
+    });
+
     clear();
-    router.push(`/checkout/success?id=${order.id}`);
+    router.push(`/checkout/success?id=${id}`);
   }
 
   if (items.length === 0) {
