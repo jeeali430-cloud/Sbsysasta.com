@@ -4,16 +4,20 @@ import {
   Package,
   Receipt,
   Tag,
+  Star,
+  Users,
   LogOut,
   Database,
 } from "lucide-react";
 import type { GuardResult } from "@/lib/admin/guard";
 
 const navItems = [
-  { href: "/admin",          label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/orders",   label: "Orders",    icon: Receipt },
-  { href: "/admin/products", label: "Products",  icon: Package },
-  { href: "/admin/coupons",  label: "Coupons",   icon: Tag },
+  { href: "/admin",           label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/orders",    label: "Orders",    icon: Receipt },
+  { href: "/admin/products",  label: "Products",  icon: Package },
+  { href: "/admin/customers", label: "Customers", icon: Users },
+  { href: "/admin/reviews",   label: "Reviews",   icon: Star },
+  { href: "/admin/coupons",   label: "Coupons",   icon: Tag },
 ];
 
 export function AdminShell({

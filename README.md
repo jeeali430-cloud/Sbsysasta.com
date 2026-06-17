@@ -20,6 +20,7 @@ Without env vars, the site runs on the in-memory seed data in `src/data/*` — e
 2. Open **SQL Editor** and run, in order:
    - `supabase/migrations/0001_init.sql` — creates tables, indexes, RLS policies
    - `supabase/migrations/0002_seed.sql` — inserts brands, categories, sub-types, products, coupons
+   - `supabase/migrations/0003_storage.sql` — creates the `product-images` bucket for admin uploads
 3. In **Project Settings → API**, copy:
    - `Project URL` → `NEXT_PUBLIC_SUPABASE_URL`
    - `anon public` key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`

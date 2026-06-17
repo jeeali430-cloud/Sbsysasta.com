@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Pencil, Plus } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/guard";
 import { listProducts } from "@/lib/admin/queries";
 import { updateProduct } from "@/lib/admin/actions";
@@ -11,17 +11,25 @@ export default async function AdminProductsPage() {
 
   return (
     <div className="space-y-6">
-      <header>
-        <p className="text-caption uppercase tracking-[0.18em] text-copper font-medium">
-          Inventory
-        </p>
-        <h1 className="mt-1 font-display text-h1 sm:text-display-lg font-semibold tracking-tight text-graphite">
-          Products
-        </h1>
-        <p className="mt-2 max-w-xl text-small text-slate">
-          Edit price and stock state inline. Save changes per row — full CRUD
-          with image upload to Supabase Storage comes in Step 9b.
-        </p>
+      <header className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-caption uppercase tracking-[0.18em] text-copper font-medium">
+            Inventory
+          </p>
+          <h1 className="mt-1 font-display text-h1 sm:text-display-lg font-semibold tracking-tight text-graphite">
+            Products
+          </h1>
+          <p className="mt-2 max-w-xl text-small text-slate">
+            Edit price + stock inline, or open a product for full editing
+            including gallery management.
+          </p>
+        </div>
+        <Link
+          href="/admin/products/new"
+          className="inline-flex items-center gap-2 rounded-full bg-copper text-white px-5 h-11 text-small font-medium hover:bg-copper-600 transition-colors"
+        >
+          <Plus className="h-4 w-4" /> New product
+        </Link>
       </header>
 
       <section className="rounded-xl border border-mist bg-white overflow-hidden">
@@ -102,6 +110,12 @@ export default async function AdminProductsPage() {
                       >
                         Save
                       </button>
+                      <Link
+                        href={`/admin/products/${p.id}/edit`}
+                        className="inline-flex items-center gap-1 text-caption text-graphite hover:text-graphite-700"
+                      >
+                        <Pencil className="h-3 w-3" /> Edit
+                      </Link>
                       <Link
                         href={`/products/${p.slug}`}
                         target="_blank"
