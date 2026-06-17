@@ -45,9 +45,9 @@ on conflict (slug) do update set
 
 -- ---------- Sub-types ----------
 
-with cat as (select id, slug from categories)
 insert into sub_types (category_id, slug, name)
-select cat.id, st.slug, st.name from cat
+select c.id, st.slug, st.name
+from categories c
 join (values
   ('led-tvs',          '32-43-inch',         '32-43 inch'),
   ('led-tvs',          '50-55-inch',         '50-55 inch'),
@@ -75,50 +75,47 @@ join (values
   ('kitchen-appliances','kettles',           'Kettles'),
   ('kitchen-appliances','sandwich-makers',   'Sandwich Makers'),
   ('kitchen-appliances','food-factory',      'Food Factory')
-) as st (cat_slug, slug, name) on st.cat_slug = cat.slug
+) as st (cat_slug, slug, name) on st.cat_slug = c.slug
 on conflict (category_id, slug) do update set name = excluded.name;
 
--- ---------- Category ↔ Brand mapping ----------
+-- ---------- Category to Brand mapping ----------
 
-with mapping as (
-  select * from (values
-    ('led-tvs',           'samsung'),
-    ('led-tvs',           'tcl'),
-    ('led-tvs',           'haier'),
-    ('led-tvs',           'ecostar'),
-    ('led-tvs',           'lg'),
-    ('refrigerators',     'dawlance'),
-    ('refrigerators',     'haier'),
-    ('refrigerators',     'pel'),
-    ('refrigerators',     'samsung'),
-    ('refrigerators',     'lg'),
-    ('refrigerators',     'orient'),
-    ('air-conditioners',  'gree'),
-    ('air-conditioners',  'haier'),
-    ('air-conditioners',  'dawlance'),
-    ('air-conditioners',  'orient'),
-    ('air-conditioners',  'pel'),
-    ('air-conditioners',  'tcl'),
-    ('washing-machines',  'haier'),
-    ('washing-machines',  'dawlance'),
-    ('washing-machines',  'samsung'),
-    ('washing-machines',  'lg'),
-    ('washing-machines',  'pel'),
-    ('microwave-ovens',   'dawlance'),
-    ('microwave-ovens',   'haier'),
-    ('microwave-ovens',   'pel'),
-    ('microwave-ovens',   'samsung'),
-    ('microwave-ovens',   'orient'),
-    ('kitchen-appliances','westpoint'),
-    ('kitchen-appliances','national'),
-    ('kitchen-appliances','anex'),
-    ('kitchen-appliances','black-decker'),
-    ('kitchen-appliances','orient')
-  ) as t (cat_slug, brand_slug)
-)
 insert into category_brands (category_id, brand_id)
 select c.id, b.id
-from mapping m
+from (values
+  ('led-tvs',           'samsung'),
+  ('led-tvs',           'tcl'),
+  ('led-tvs',           'haier'),
+  ('led-tvs',           'ecostar'),
+  ('led-tvs',           'lg'),
+  ('refrigerators',     'dawlance'),
+  ('refrigerators',     'haier'),
+  ('refrigerators',     'pel'),
+  ('refrigerators',     'samsung'),
+  ('refrigerators',     'lg'),
+  ('refrigerators',     'orient'),
+  ('air-conditioners',  'gree'),
+  ('air-conditioners',  'haier'),
+  ('air-conditioners',  'dawlance'),
+  ('air-conditioners',  'orient'),
+  ('air-conditioners',  'pel'),
+  ('air-conditioners',  'tcl'),
+  ('washing-machines',  'haier'),
+  ('washing-machines',  'dawlance'),
+  ('washing-machines',  'samsung'),
+  ('washing-machines',  'lg'),
+  ('washing-machines',  'pel'),
+  ('microwave-ovens',   'dawlance'),
+  ('microwave-ovens',   'haier'),
+  ('microwave-ovens',   'pel'),
+  ('microwave-ovens',   'samsung'),
+  ('microwave-ovens',   'orient'),
+  ('kitchen-appliances','westpoint'),
+  ('kitchen-appliances','national'),
+  ('kitchen-appliances','anex'),
+  ('kitchen-appliances','black-decker'),
+  ('kitchen-appliances','orient')
+) as m (cat_slug, brand_slug)
 join categories c on c.slug = m.cat_slug
 join brands     b on b.slug = m.brand_slug
 on conflict do nothing;
