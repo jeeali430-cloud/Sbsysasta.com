@@ -3,6 +3,8 @@ import { site } from "@/data/site";
 import { listCategories } from "@/lib/repo/categories";
 import { listProducts } from "@/lib/repo/products";
 
+type Entry = MetadataRoute.Sitemap[number];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [categories, products] = await Promise.all([
     listCategories(),
@@ -11,8 +13,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const base = site.url;
 
-  const staticUrls = [
-    "",
+  const home: Entry = {
+    url: base,
+    lastModified: now,
+    changeFrequency: "daily",
+    priority: 1.0,
+  };
+
+  const policyUrls: Entry[] = [
     "/installments",
     "/shipping",
     "/returns",
@@ -22,15 +30,41 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/faq",
     "/privacy",
     "/terms",
-  ];
-
-  const categoryUrls = categories.map((c) => `/collections/${c.seoSlug}`);
-  const productUrls = products.map((p) => `/products/${p.slug}`);
-
-  return [...staticUrls, ...categoryUrls, ...productUrls].map((path) => ({
+  ].map((path) => ({
     url: `${base}${path}`,
     lastModified: now,
-    changeFrequency: path === "" ? "daily" : "weekly",
-    priority: path === "" ? 1.0 : 0.7,
+    changeFrequency: "monthly",
+    priority: 0.5,
   }));
+
+  const virtual: Entry[] = [
+    {
+      url: `${base}/collections/all`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.6,
+    },
+    {
+      url: `${base}/collections/deals`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
+  ];
+
+  const categoryUrls: Entry[] = categories.map((c) => ({
+    url: `${base}/collections/${c.seoSlug}`,
+    lastModified: now,
+    changeFrequency: "daily",
+    priority: 0.9,
+  }));
+
+  const productUrls: Entry[] = products.map((p) => ({
+    url: `${base}/products/${p.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
+
+  return [home, ...categoryUrls, ...virtual, ...productUrls, ...policyUrls];
 }

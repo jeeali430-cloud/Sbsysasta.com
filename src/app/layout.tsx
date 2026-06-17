@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { site } from "@/data/site";
-import { organizationJsonLd } from "@/lib/seo";
+import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { Cursor } from "@/components/effects/cursor";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { CartDrawer } from "@/components/cart/cart-drawer";
@@ -35,7 +35,13 @@ export const metadata: Metadata = {
     "installment plans",
     "cash on delivery Lahore",
   ],
-  alternates: { canonical: site.url },
+  alternates: {
+    canonical: site.url,
+    languages: {
+      "en-PK": site.url,
+      "x-default": site.url,
+    },
+  },
   openGraph: {
     type: "website",
     url: site.url,
@@ -68,6 +74,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteJsonLd),
           }}
         />
       </body>

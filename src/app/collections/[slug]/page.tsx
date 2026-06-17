@@ -20,7 +20,7 @@ import {
   parseFilters,
   activeFilterCount,
 } from "@/lib/filter-products";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, buildItemListJsonLd } from "@/lib/seo";
 import { site } from "@/data/site";
 
 type Props = {
@@ -141,6 +141,13 @@ export default async function CollectionPage({ params, searchParams }: Props) {
     isPartOf: { "@type": "WebSite", name: site.name, url: site.url },
   };
 
+  const itemListJsonLd = buildItemListJsonLd(
+    filtered.slice(0, 24).map((p) => ({
+      name: p.title,
+      url: `${site.url}/products/${p.slug}`,
+    }))
+  );
+
   return (
     <>
       <Header />
@@ -253,6 +260,10 @@ export default async function CollectionPage({ params, searchParams }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
     </>
   );
