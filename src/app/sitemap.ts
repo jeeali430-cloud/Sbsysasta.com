@@ -21,20 +21,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   };
 
   const policyUrls: Entry[] = [
-    "/installments",
-    "/shipping",
-    "/returns",
-    "/warranty",
-    "/about",
-    "/contact",
-    "/faq",
-    "/privacy",
-    "/terms",
-  ].map((path) => ({
+    { path: "/installments", priority: 0.7 },
+    { path: "/shipping", priority: 0.6 },
+    { path: "/returns", priority: 0.6 },
+    { path: "/warranty", priority: 0.6 },
+    { path: "/about", priority: 0.5 },
+    { path: "/contact", priority: 0.6 },
+    { path: "/faq", priority: 0.6 },
+    { path: "/privacy", priority: 0.3 },
+    { path: "/terms", priority: 0.3 },
+  ].map(({ path, priority }) => ({
     url: `${base}${path}`,
     lastModified: now,
     changeFrequency: "monthly",
-    priority: 0.5,
+    priority,
   }));
 
   const virtual: Entry[] = [

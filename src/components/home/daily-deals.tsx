@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/container";
 import { ProductCard } from "@/components/ui/product-card";
 import { getDealProducts } from "@/lib/repo/products";
 import { Reveal, RevealStagger, RevealItem } from "@/components/effects/reveal";
+import { DealsCountdown } from "@/components/home/deals-countdown";
 
 export async function DailyDeals() {
   const deals = await getDealProducts();
@@ -27,10 +28,12 @@ export async function DailyDeals() {
               Prices on these refresh every 24 hours. Lock in today's deal — pay
               cash on delivery or split it into easy installments.
             </p>
+            <div className="mt-5">
+              <DealsCountdown />
+            </div>
           </div>
           <Link
             href="/collections/deals"
-            data-cursor="view"
             className="inline-flex items-center gap-2 text-small font-medium text-copper-200 hover:text-white transition-colors"
           >
             View all deals <ArrowRight className="h-4 w-4" />

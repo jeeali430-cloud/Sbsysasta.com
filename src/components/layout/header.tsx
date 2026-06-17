@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { Phone, Search, User, Menu } from "lucide-react";
+import { Phone, Search, User } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { site, whatsappLink } from "@/data/site";
 import { listCategories } from "@/lib/repo/categories";
 import { CartButton } from "@/components/cart/cart-button";
+import { MobileMenu } from "@/components/layout/mobile-menu";
 
 export async function Header() {
   const categories = await listCategories();
@@ -71,12 +72,13 @@ export async function Header() {
           </nav>
 
           <div className="flex items-center gap-1.5 sm:gap-3">
-            <button
+            <Link
+              href="/search"
               aria-label="Search"
               className="rounded-full p-2.5 text-graphite hover:bg-graphite-50 transition-colors"
             >
               <Search className="h-5 w-5" />
-            </button>
+            </Link>
             <Link
               href="/account"
               aria-label="Account"
@@ -85,12 +87,7 @@ export async function Header() {
               <User className="h-5 w-5" />
             </Link>
             <CartButton />
-            <button
-              aria-label="Menu"
-              className="lg:hidden rounded-full p-2.5 text-graphite hover:bg-graphite-50 transition-colors"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
+            <MobileMenu categories={categories} />
           </div>
         </div>
       </Container>

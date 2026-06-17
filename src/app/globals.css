@@ -22,14 +22,6 @@
     font-feature-settings: "ss01", "cv11", "ss03";
   }
 
-  html.custom-cursor,
-  html.custom-cursor *,
-  html.custom-cursor a,
-  html.custom-cursor button,
-  html.custom-cursor [role="button"] {
-    cursor: none !important;
-  }
-
   ::selection {
     background: rgb(var(--accent) / 0.18);
     color: rgb(var(--ink));
@@ -55,6 +47,28 @@
 
   .skip-link {
     @apply absolute left-3 top-3 z-[200] -translate-y-20 rounded-md bg-graphite px-4 py-2 text-small font-medium text-white shadow-lift transition-transform focus:translate-y-0;
+  }
+
+  .prose-policy h2 {
+    @apply font-display text-h1 font-semibold text-graphite mt-12 mb-4 first:mt-0;
+  }
+  .prose-policy h3 {
+    @apply font-display text-h2 font-semibold text-graphite mt-8 mb-3;
+  }
+  .prose-policy p {
+    @apply text-body text-slate leading-relaxed text-pretty;
+  }
+  .prose-policy ul {
+    @apply list-disc pl-6 space-y-2 text-body text-slate marker:text-copper;
+  }
+  .prose-policy ol {
+    @apply list-decimal pl-6 space-y-2 text-body text-slate marker:text-copper;
+  }
+  .prose-policy a {
+    @apply text-copper underline-offset-4 hover:underline;
+  }
+  .prose-policy strong {
+    @apply text-graphite font-semibold;
   }
 }
 

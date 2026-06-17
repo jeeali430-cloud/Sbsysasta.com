@@ -9,6 +9,7 @@ import { DailyDeals } from "@/components/home/daily-deals";
 import { InstallmentsCTA } from "@/components/home/installments-cta";
 import { BrandStrip } from "@/components/home/brand-strip";
 import { WhyChooseUs } from "@/components/home/why-choose-us";
+import { Testimonials } from "@/components/home/testimonials";
 import { FAQ, homepageFAQs } from "@/components/home/faq";
 import { buildMetadata } from "@/lib/seo";
 import { site } from "@/data/site";
@@ -43,6 +44,7 @@ export default function HomePage() {
         <InstallmentsCTA />
         <BrandStrip />
         <WhyChooseUs />
+        <Testimonials />
         <FAQ />
       </main>
       <Footer />

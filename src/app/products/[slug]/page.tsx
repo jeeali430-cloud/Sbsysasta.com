@@ -24,6 +24,7 @@ import { StickyBar } from "@/components/products/sticky-bar";
 import { RelatedProducts } from "@/components/products/related-products";
 import { Bundle } from "@/components/products/bundle";
 import { InstallmentCalculator } from "@/components/products/installment-calculator";
+import { ReviewForm } from "@/components/products/review-form";
 import { Reveal } from "@/components/effects/reveal";
 import {
   listProducts,
@@ -292,6 +293,19 @@ export default async function ProductPage({ params }: Props) {
             </Reveal>
           </div>
         </Container>
+
+        <section className="border-t border-mist bg-porcelain py-16 sm:py-20">
+          <Container>
+            <div className="max-w-2xl">
+              <Reveal>
+                <ReviewForm
+                  productId={product.id}
+                  productTitle={product.title}
+                />
+              </Reveal>
+            </div>
+          </Container>
+        </section>
 
         {bundleExtras.length > 0 && (
           <Bundle primary={product} extras={bundleExtras} />

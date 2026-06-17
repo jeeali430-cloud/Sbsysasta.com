@@ -9,5 +9,7 @@ export async function POST(request: Request) {
   if (supabase) {
     await supabase.auth.signOut();
   }
-  return NextResponse.redirect(`${origin}/admin/login`, { status: 303 });
+  const referer = request.headers.get("referer") ?? "";
+  const next = referer.includes("/admin") ? "/admin/login" : "/";
+  return NextResponse.redirect(`${origin}${next}`, { status: 303 });
 }
