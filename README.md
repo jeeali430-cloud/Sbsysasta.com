@@ -44,11 +44,11 @@ Public read is allowed via RLS for catalog + active coupons + approved reviews. 
 - [x] Step 5 — Product detail page with gallery, specs, bundle, related
 - [x] Step 6 — Cart drawer, full cart, guest checkout, order confirmation
 - [x] Step 7 — Supabase schema + repo abstraction + /api/orders + /api/coupons
-- [ ] Step 8 — Connect cart/checkout to authenticated admin status updates
-- [ ] Step 9 — Admin dashboard (products CRUD, orders, analytics)
-- [ ] Step 10 — SEO polish (additional schema, JSON-LD audit)
-- [ ] Step 11 — Image optimization pass
-- [ ] Step 12 — WhatsApp polish, payment icons
-- [ ] Step 13 — Mobile + accessibility pass
-- [ ] Step 14 — Lighthouse performance pass
-- [ ] Step 15 — Deployment (Vercel + Supabase)
+- [x] Step 8 — Cart drawer & checkout wired to Supabase
+- [x] Step 9 — Admin dashboard (products CRUD, orders, reviews, customers, coupons)
+- [x] Step 10 — SEO polish (OG images, JSON-LD, hreflang, /search)
+- [x] Step 11 — Image audit (alt text, sizes, priority, blur placeholders)
+- [x] Step 12 — Payment icons + installment calculator + animated WhatsApp
+- [x] Step 13 — Mobile + accessibility (skip link, ARIA, focus rings, reduced-motion)
+- [x] Step 14 — Performance (lazy-load cursor, code-split, static prerender)
+- [ ] Step 15 — Deployment (Vercel + Supabase) ← awaiting approval

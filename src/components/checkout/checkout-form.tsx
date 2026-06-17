@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useCart } from "@/components/cart/cart-provider";
 import { CouponField } from "@/components/cart/coupon-field";
+import { PaymentBadge } from "@/components/icons/payment";
 import {
   couponDiscount,
   deliveryFee,
@@ -27,36 +28,49 @@ import { cn } from "@/lib/utils";
 type Region = "lahore" | "nationwide";
 type Pay = "cod" | "jazzcash" | "easypaisa" | "bank" | "card";
 
-const payMethods: { id: Pay; label: string; sub: string; icon: typeof Banknote }[] = [
+type PayBadge = "cod" | "jazzcash" | "easypaisa" | "bank" | "visa" | "mastercard";
+
+const payMethods: {
+  id: Pay;
+  label: string;
+  sub: string;
+  icon: typeof Banknote;
+  badges: PayBadge[];
+}[] = [
   {
     id: "cod",
     label: "Cash on Delivery",
     sub: "Pay the rider in cash — across Pakistan",
     icon: Banknote,
+    badges: ["cod"],
   },
   {
     id: "jazzcash",
     label: "JazzCash",
     sub: "We'll send a payment request to your number",
     icon: Smartphone,
+    badges: ["jazzcash"],
   },
   {
     id: "easypaisa",
     label: "EasyPaisa",
     sub: "Pay via the EasyPaisa app or shop",
     icon: Smartphone,
+    badges: ["easypaisa"],
   },
   {
     id: "bank",
     label: "Bank Transfer",
     sub: "Bank details emailed after order",
     icon: Building2,
+    badges: ["bank"],
   },
   {
     id: "card",
     label: "Debit / Credit Card",
-    sub: "Visa, Master — processed by Safepay / PayFast",
+    sub: "Processed by Safepay / PayFast",
     icon: CreditCard,
+    badges: ["visa", "mastercard"],
   },
 ];
 
@@ -256,6 +270,11 @@ export function CheckoutForm() {
                     <span className="block text-caption text-graphite-400">
                       {m.sub}
                     </span>
+                  </span>
+                  <span className="hidden sm:flex items-center gap-1.5 self-center">
+                    {m.badges.map((b) => (
+                      <PaymentBadge key={b} method={b} />
+                    ))}
                   </span>
                 </label>
               </li>

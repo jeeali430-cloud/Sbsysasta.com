@@ -14,7 +14,7 @@ export default function CheckoutSuccessPage() {
   return (
     <>
       <Header />
-      <main className="bg-porcelain min-h-screen pb-20">
+      <main id="main-content" className="bg-porcelain min-h-screen pb-20">
         <Container className="pt-10 pb-6">
           <Suspense
             fallback={

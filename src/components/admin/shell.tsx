@@ -108,7 +108,9 @@ export function AdminShell({
             </ul>
           </nav>
 
-          <main className="px-5 lg:px-8 py-8 max-w-6xl">{children}</main>
+          <main id="main-content" className="px-5 lg:px-8 py-8 max-w-6xl">
+            {children}
+          </main>
         </div>
       </div>
     </div>

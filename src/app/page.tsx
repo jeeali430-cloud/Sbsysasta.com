@@ -34,7 +34,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <main>
+      <main id="main-content">
         <Hero />
         <TrustStrip />
         <CategoryGrid />

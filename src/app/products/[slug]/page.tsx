@@ -23,6 +23,7 @@ import { Highlights } from "@/components/products/highlights";
 import { StickyBar } from "@/components/products/sticky-bar";
 import { RelatedProducts } from "@/components/products/related-products";
 import { Bundle } from "@/components/products/bundle";
+import { InstallmentCalculator } from "@/components/products/installment-calculator";
 import { Reveal } from "@/components/effects/reveal";
 import {
   listProducts,
@@ -120,7 +121,7 @@ export default async function ProductPage({ params }: Props) {
   return (
     <>
       <Header />
-      <main className="bg-porcelain pb-32 lg:pb-20">
+      <main id="main-content" className="bg-porcelain pb-32 lg:pb-20">
         <Container className="pt-8 pb-4">
           <Breadcrumbs crumbs={crumbs} />
         </Container>
@@ -271,17 +272,23 @@ export default async function ProductPage({ params }: Props) {
               )}
             </Reveal>
 
-            <Reveal delay={0.05}>
-              <h2 className="font-display text-h1 font-semibold text-graphite mb-5">
-                Specifications
-              </h2>
-              {product.specs && product.specs.length > 0 ? (
-                <SpecsTable specs={product.specs} />
-              ) : (
-                <p className="text-small text-slate">
-                  Detailed specs available on request — message us on WhatsApp.
-                </p>
-              )}
+            <Reveal delay={0.05} className="space-y-6">
+              <div>
+                <h2 className="font-display text-h1 font-semibold text-graphite mb-5">
+                  Specifications
+                </h2>
+                {product.specs && product.specs.length > 0 ? (
+                  <SpecsTable specs={product.specs} />
+                ) : (
+                  <p className="text-small text-slate">
+                    Detailed specs available on request — message us on WhatsApp.
+                  </p>
+                )}
+              </div>
+              <InstallmentCalculator
+                price={product.price}
+                productTitle={product.title}
+              />
             </Reveal>
           </div>
         </Container>

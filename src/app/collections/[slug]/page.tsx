@@ -151,7 +151,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   return (
     <>
       <Header />
-      <main className="bg-porcelain">
+      <main id="main-content" className="bg-porcelain">
         <Container className="pt-8 pb-4">
           <Breadcrumbs crumbs={crumbs} />
         </Container>

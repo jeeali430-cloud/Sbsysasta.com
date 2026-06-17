@@ -1,11 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import { site } from "@/data/site";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
-import { Cursor } from "@/components/effects/cursor";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+
+const Cursor = dynamic(
+  () => import("@/components/effects/cursor").then((m) => m.Cursor),
+  { ssr: false }
+);
 
 const inter = Inter({
   subsets: ["latin"],
@@ -65,6 +70,9 @@ export default function RootLayout({
   return (
     <html lang="en-PK" className={inter.variable}>
       <body>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <CartProvider>
           {children}
           <CartDrawer />

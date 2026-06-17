@@ -52,6 +52,10 @@
   .surface {
     @apply bg-white border border-mist rounded-lg;
   }
+
+  .skip-link {
+    @apply absolute left-3 top-3 z-[200] -translate-y-20 rounded-md bg-graphite px-4 py-2 text-small font-medium text-white shadow-lift transition-transform focus:translate-y-0;
+  }
 }
 
 @layer utilities {

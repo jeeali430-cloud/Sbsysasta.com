@@ -3,6 +3,7 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { site, whatsappLink } from "@/data/site";
 import { listCategories } from "@/lib/repo/categories";
+import { PaymentRow } from "@/components/icons/payment";
 
 export async function Footer() {
   const categories = await listCategories();
@@ -117,18 +118,7 @@ export async function Footer() {
             <p className="mt-6 text-caption uppercase tracking-[0.18em] text-graphite-300">
               We accept
             </p>
-            <div className="mt-3 flex flex-wrap gap-2 text-caption">
-              {["COD", "JazzCash", "EasyPaisa", "Bank Transfer", "Visa", "Master"].map(
-                (m) => (
-                  <span
-                    key={m}
-                    className="rounded-md border border-graphite-600 px-2 py-1 text-graphite-200"
-                  >
-                    {m}
-                  </span>
-                )
-              )}
-            </div>
+            <PaymentRow className="mt-3" />
           </div>
         </div>
 

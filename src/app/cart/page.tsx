@@ -16,7 +16,7 @@ export default function CartPage() {
   return (
     <>
       <Header />
-      <main className="bg-porcelain min-h-screen pb-20">
+      <main id="main-content" className="bg-porcelain min-h-screen pb-20">
         <Container className="pt-10 pb-6">
           <p className="text-caption uppercase tracking-[0.18em] text-copper font-medium">
             Your selection

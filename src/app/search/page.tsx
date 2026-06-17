@@ -41,7 +41,7 @@ export default async function SearchPage({ searchParams }: Props) {
   return (
     <>
       <Header />
-      <main className="bg-porcelain min-h-screen pb-16">
+      <main id="main-content" className="bg-porcelain min-h-screen pb-16">
         <Container className="pt-10 pb-6">
           <p className="text-caption uppercase tracking-[0.18em] text-copper font-medium">
             Search
