@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Menu, X, Phone, MessageCircle, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -68,9 +69,17 @@ export function MobileMenu({ categories }: Props) {
             <Link
               href="/"
               onClick={() => setOpen(false)}
-              className="font-display text-h2 font-semibold tracking-tight text-graphite"
+              aria-label="Sbsysasta — Home"
+              className="inline-flex items-center"
             >
-              Sbsysasta<span className="text-copper">.</span>
+              <Image
+                src="/logo.png"
+                alt="Sbsysasta logo"
+                width={36}
+                height={36}
+                className="object-contain"
+                priority
+              />
             </Link>
             <button
               type="button"

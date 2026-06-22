@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { AlertCircle, Database, Lock } from "lucide-react";
 import { LoginForm } from "@/components/admin/login-form";
 import { checkAdmin } from "@/lib/admin/guard";
@@ -23,11 +24,18 @@ export default async function AdminLoginPage({
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       <div className="bg-graphite text-porcelain p-10 lg:p-16 flex flex-col justify-between">
-        <Link
-          href="/"
-          className="font-display text-h2 font-semibold tracking-tight text-white"
-        >
-          Sbsysasta<span className="text-copper-300">.</span>
+        <Link href="/" aria-label="Sbsysasta — Home" className="inline-flex items-center gap-3">
+          <Image
+            src="/logo.png"
+            alt="Sbsysasta logo"
+            width={48}
+            height={48}
+            className="object-contain"
+            priority
+          />
+          <span className="font-display text-h2 font-semibold tracking-tight text-white">
+            Sbsysasta
+          </span>
         </Link>
         <div className="max-w-md">
           <p className="text-caption uppercase tracking-[0.18em] text-copper-300 font-medium">

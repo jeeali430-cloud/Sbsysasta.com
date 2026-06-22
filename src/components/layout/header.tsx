@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Phone, Search, User } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import { Logo } from "@/components/ui/logo";
 import { site, whatsappLink } from "@/data/site";
 import { listCategories } from "@/lib/repo/categories";
 import { CartButton } from "@/components/cart/cart-button";
@@ -45,12 +46,7 @@ export async function Header() {
       <Container>
         <div className="flex items-center justify-between gap-4 py-4">
           <div className="flex items-center gap-8">
-            <Link
-              href="/"
-              className="font-display text-h2 font-semibold tracking-tight text-graphite"
-            >
-              Sbsysasta<span className="text-copper">.</span>
-            </Link>
+            <Logo size="md" />
           </div>
 
           <nav className="hidden lg:flex items-center gap-7 text-small font-medium text-graphite">

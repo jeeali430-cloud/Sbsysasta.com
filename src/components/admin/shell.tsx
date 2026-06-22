@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   LayoutDashboard,
   Package,
@@ -35,11 +36,18 @@ export function AdminShell({
       <div className="flex min-h-screen">
         <aside className="hidden lg:flex w-64 shrink-0 flex-col border-r border-mist bg-white">
           <div className="p-6 border-b border-mist">
-            <Link
-              href="/"
-              className="font-display text-h2 font-semibold tracking-tight text-graphite"
-            >
-              Sbsysasta<span className="text-copper">.</span>
+            <Link href="/" aria-label="Sbsysasta — Home" className="inline-flex items-center gap-2.5">
+              <Image
+                src="/logo.png"
+                alt="Sbsysasta logo"
+                width={36}
+                height={36}
+                className="object-contain"
+                priority
+              />
+              <span className="font-display text-h3 font-semibold tracking-tight text-graphite">
+                Sbsysasta
+              </span>
             </Link>
             <p className="mt-1 text-caption uppercase tracking-[0.16em] text-graphite-400">
               Admin

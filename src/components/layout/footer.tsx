@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import { Logo } from "@/components/ui/logo";
 import { site, whatsappLink } from "@/data/site";
 import { listCategories } from "@/lib/repo/categories";
 import { PaymentRow } from "@/components/icons/payment";
@@ -12,12 +13,7 @@ export async function Footer() {
       <Container>
         <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Link
-              href="/"
-              className="font-display text-h2 font-semibold tracking-tight text-white"
-            >
-              Sbsysasta<span className="text-copper-300">.</span>
-            </Link>
+            <Logo size="lg" variant="light" />
             <p className="mt-4 text-small text-graphite-200">
               Premium home appliances and electronics, delivered across Lahore
               and shipped nationwide. Genuine brands, honest prices, real
