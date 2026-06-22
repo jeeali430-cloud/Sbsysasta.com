@@ -9,35 +9,28 @@ type Props = {
   className?: string;
 };
 
-// Logo image is 600×200 (3:1). Heights below drive the displayed size.
-const sizes = {
-  sm: { h: 36, w: 108 },
-  md: { h: 44, w: 132 },
-  lg: { h: 56, w: 168 },
-};
+const sizes = { sm: 40, md: 52, lg: 68 };
 
 export function Logo({
   href = "/",
   size = "md",
-  variant = "dark",
+  variant,
   className,
 }: Props) {
-  const s = sizes[size];
-  // On dark backgrounds the logo already has an orange palette that reads well.
-  // On light backgrounds same — transparent PNG works for both.
   void variant;
+  const px = sizes[size];
 
   return (
     <Link
       href={href}
-      aria-label="Sbsysasta — Home"
-      className={cn("inline-flex items-center", className)}
+      aria-label="Sb Sy Sasta — Home"
+      className={cn("inline-flex items-center shrink-0", className)}
     >
       <Image
         src="/logo.png"
         alt="Sb Sy Sasta.com"
-        width={s.w}
-        height={s.h}
+        width={px}
+        height={px}
         className="object-contain"
         priority
       />
