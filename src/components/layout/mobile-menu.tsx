@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Menu, X, Phone, MessageCircle, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { site, whatsappLink } from "@/data/site";
+import { Logo } from "@/components/ui/logo";
 import type { Category } from "@/data/categories";
 
 type Props = {
@@ -66,21 +66,9 @@ export function MobileMenu({ categories }: Props) {
           aria-label="Main menu"
         >
           <header className="flex items-center justify-between border-b border-mist bg-white px-5 py-4">
-            <Link
-              href="/"
-              onClick={() => setOpen(false)}
-              aria-label="Sbsysasta — Home"
-              className="inline-flex items-center"
-            >
-              <Image
-                src="/logo.png"
-                alt="Sbsysasta logo"
-                width={36}
-                height={36}
-                className="object-contain"
-                priority
-              />
-            </Link>
+            <span onClick={() => setOpen(false)}>
+              <Logo size="sm" />
+            </span>
             <button
               type="button"
               onClick={() => setOpen(false)}

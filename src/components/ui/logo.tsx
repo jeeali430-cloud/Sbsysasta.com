@@ -7,13 +7,13 @@ type Props = {
   size?: "sm" | "md" | "lg";
   variant?: "light" | "dark";
   className?: string;
-  showText?: boolean;
 };
 
+// Logo image is 600×200 (3:1). Heights below drive the displayed size.
 const sizes = {
-  sm: { box: 32, text: "text-h3" },
-  md: { box: 40, text: "text-h2" },
-  lg: { box: 56, text: "text-display-lg" },
+  sm: { h: 36, w: 108 },
+  md: { h: 44, w: 132 },
+  lg: { h: 56, w: 168 },
 };
 
 export function Logo({
@@ -21,42 +21,26 @@ export function Logo({
   size = "md",
   variant = "dark",
   className,
-  showText = false,
 }: Props) {
   const s = sizes[size];
-  const accent = variant === "light" ? "text-copper-300" : "text-copper";
-  const ink = variant === "light" ? "text-white" : "text-graphite";
+  // On dark backgrounds the logo already has an orange palette that reads well.
+  // On light backgrounds same — transparent PNG works for both.
+  void variant;
 
   return (
     <Link
       href={href}
       aria-label="Sbsysasta — Home"
-      className={cn("inline-flex items-center gap-2.5", className)}
+      className={cn("inline-flex items-center", className)}
     >
-      <span
-        className="relative inline-block shrink-0"
-        style={{ width: s.box, height: s.box }}
-      >
-        <Image
-          src="/logo.png"
-          alt="Sbsysasta logo"
-          fill
-          sizes={`${s.box}px`}
-          className="object-contain"
-          priority
-        />
-      </span>
-      {showText && (
-        <span
-          className={cn(
-            "font-display font-semibold tracking-tight",
-            s.text,
-            ink
-          )}
-        >
-          Sbsysasta<span className={accent}>.</span>
-        </span>
-      )}
+      <Image
+        src="/logo.png"
+        alt="Sb Sy Sasta.com"
+        width={s.w}
+        height={s.h}
+        className="object-contain"
+        priority
+      />
     </Link>
   );
 }
