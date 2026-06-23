@@ -6,6 +6,7 @@ import { site, whatsappLink } from "@/data/site";
 import { listCategories } from "@/lib/repo/categories";
 import { CartButton } from "@/components/cart/cart-button";
 import { MobileMenu } from "@/components/layout/mobile-menu";
+import { ShopMenu } from "@/components/layout/shop-menu";
 
 export async function Header() {
   const categories = await listCategories();
@@ -50,20 +51,36 @@ export async function Header() {
           </div>
 
           <nav className="hidden lg:flex items-center gap-7 text-small font-medium text-graphite">
-            {categories.slice(0, 5).map((c) => (
-              <Link
-                key={c.slug}
-                href={`/collections/${c.seoSlug}`}
-                className="hover:text-copper transition-colors duration-300"
-              >
-                {c.name}
-              </Link>
-            ))}
+            <Link
+              href="/"
+              className="hover:text-copper transition-colors duration-300"
+            >
+              Home
+            </Link>
+            <ShopMenu categories={categories} />
             <Link
               href="/installments"
               className="text-copper hover:text-copper-600 transition-colors duration-300"
             >
               Installments
+            </Link>
+            <Link
+              href="/about"
+              className="hover:text-copper transition-colors duration-300"
+            >
+              About
+            </Link>
+            <Link
+              href="/contact"
+              className="hover:text-copper transition-colors duration-300"
+            >
+              Contact
+            </Link>
+            <Link
+              href="/privacy"
+              className="hover:text-copper transition-colors duration-300"
+            >
+              Privacy
             </Link>
           </nav>
 

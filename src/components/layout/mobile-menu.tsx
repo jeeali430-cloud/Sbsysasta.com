@@ -82,17 +82,26 @@ export function MobileMenu({ categories }: Props) {
           <nav className="flex-1 overflow-y-auto px-5 py-5 space-y-6">
             <div>
               <p className="mb-2 text-caption uppercase tracking-[0.16em] text-graphite-400">
-                Shop
+                Menu
               </p>
               <ul className="space-y-1">
-                {categories.map((c) => (
-                  <li key={c.slug}>
+                {[
+                  { href: "/", label: "Home" },
+                  { href: "/installments", label: "Installments" },
+                  { href: "/about", label: "About" },
+                  { href: "/contact", label: "Contact" },
+                  { href: "/privacy", label: "Privacy Policy" },
+                  { href: "/terms", label: "Terms" },
+                  { href: "/faq", label: "FAQ" },
+                  { href: "/account", label: "My Account" },
+                ].map((l) => (
+                  <li key={l.href}>
                     <Link
-                      href={`/collections/${c.seoSlug}`}
+                      href={l.href}
                       onClick={() => setOpen(false)}
-                      className="flex items-center justify-between rounded-lg px-3 py-3 text-body font-medium text-graphite hover:bg-white"
+                      className="flex items-center justify-between rounded-lg px-3 py-2.5 text-body font-medium text-graphite hover:bg-white"
                     >
-                      <span>{c.name}</span>
+                      <span>{l.label}</span>
                       <ChevronRight className="h-4 w-4 text-graphite-300" />
                     </Link>
                   </li>
@@ -102,24 +111,18 @@ export function MobileMenu({ categories }: Props) {
 
             <div>
               <p className="mb-2 text-caption uppercase tracking-[0.16em] text-graphite-400">
-                Quick links
+                Shop by Category
               </p>
               <ul className="space-y-1">
-                {[
-                  { href: "/installments", label: "Easy Installments" },
-                  { href: "/collections/deals", label: "Today's Deals" },
-                  { href: "/account", label: "My Account" },
-                  { href: "/about", label: "About Us" },
-                  { href: "/contact", label: "Contact" },
-                  { href: "/faq", label: "FAQ" },
-                ].map((l) => (
-                  <li key={l.href}>
+                {categories.map((c) => (
+                  <li key={c.slug}>
                     <Link
-                      href={l.href}
+                      href={`/collections/${c.seoSlug}`}
                       onClick={() => setOpen(false)}
-                      className="block rounded-lg px-3 py-2 text-small text-graphite hover:bg-white"
+                      className="flex items-center justify-between rounded-lg px-3 py-2.5 text-small text-graphite hover:bg-white"
                     >
-                      {l.label}
+                      <span>{c.name}</span>
+                      <ChevronRight className="h-4 w-4 text-graphite-300" />
                     </Link>
                   </li>
                 ))}
