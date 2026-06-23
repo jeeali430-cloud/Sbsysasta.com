@@ -9,7 +9,10 @@ type Props = {
   className?: string;
 };
 
-const sizes = { sm: 40, md: 52, lg: 68 };
+// Logo PNG is 1200×320 (~3.75:1). Heights below drive the displayed size;
+// width is computed to preserve the aspect ratio so the full wordmark shows.
+const ratio = 1200 / 320;
+const heights = { sm: 32, md: 44, lg: 56 };
 
 export function Logo({
   href = "/",
@@ -18,19 +21,20 @@ export function Logo({
   className,
 }: Props) {
   void variant;
-  const px = sizes[size];
+  const h = heights[size];
+  const w = Math.round(h * ratio);
 
   return (
     <Link
       href={href}
-      aria-label="Sb Sy Sasta — Home"
+      aria-label="Sb Sy Sasta.com — Home"
       className={cn("inline-flex items-center shrink-0", className)}
     >
       <Image
         src="/logo.png"
         alt="Sb Sy Sasta.com"
-        width={px}
-        height={px}
+        width={w}
+        height={h}
         className="object-contain"
         priority
       />
