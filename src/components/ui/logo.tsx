@@ -9,7 +9,7 @@ type Props = {
   className?: string;
 };
 
-const sizes = { sm: 80, md: 128, lg: 180 };
+const sizes = { sm: 48, md: 64, lg: 96 };
 
 export function Logo({
   href = "/",
