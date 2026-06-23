@@ -9,9 +9,9 @@ type Props = {
   className?: string;
 };
 
-// Logo PNG is 1200×320 (~3.75:1). Heights below drive the displayed size;
+// Logo PNG is 1500×320 (≈4.7:1). Heights below drive the displayed size;
 // width is computed to preserve the aspect ratio so the full wordmark shows.
-const ratio = 1200 / 320;
+const ratio = 1500 / 320;
 const heights = { sm: 32, md: 44, lg: 56 };
 
 export function Logo({
