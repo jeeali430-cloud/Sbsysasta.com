@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ExternalLink, Trash2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ExternalLink, Trash2, XCircle } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/guard";
 import {
   getProductFull,
@@ -13,8 +13,10 @@ import { GalleryManager } from "@/components/admin/gallery-manager";
 
 export default async function EditProductPage({
   params,
+  searchParams,
 }: {
   params: { id: string };
+  searchParams: { saved?: string; error?: string };
 }) {
   await requireAdmin();
   const [product, brands, categories] = await Promise.all([
@@ -47,6 +49,34 @@ export default async function EditProductPage({
           View live <ExternalLink className="h-3.5 w-3.5" />
         </Link>
       </div>
+
+      {searchParams.saved && (
+        <div className="flex items-start gap-2.5 rounded-lg border border-pine/30 bg-pine/5 p-4 text-small text-graphite">
+          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-pine" />
+          <div>
+            <p className="font-medium">Changes saved</p>
+            <p className="mt-0.5 text-graphite-400">
+              Your updates are live on the store now.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {searchParams.error && (
+        <div className="flex items-start gap-2.5 rounded-lg border border-carmine/30 bg-carmine/5 p-4 text-small text-graphite">
+          <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-carmine" />
+          <div>
+            <p className="font-medium">Couldn&apos;t save changes</p>
+            <p className="mt-0.5 text-graphite-400">
+              {searchParams.error === "missing-fields"
+                ? "Please fill the required fields: title, brand, category."
+                : searchParams.error === "db"
+                ? "Supabase isn't connected. Check NEXT_PUBLIC_SUPABASE_URL / SERVICE_ROLE_KEY in Vercel env vars."
+                : searchParams.error}
+            </p>
+          </div>
+        </div>
+      )}
 
       <GalleryManager
         productId={product.id}

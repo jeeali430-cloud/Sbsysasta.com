@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useFormStatus } from "react-dom";
+import { Loader2 } from "lucide-react";
 import type { BrandLite, CategoryLite } from "@/lib/admin/queries";
 
 type FormValues = {
@@ -230,14 +232,29 @@ export function ProductForm({
       </Card>
 
       <div className="flex justify-end gap-3">
-        <button
-          type="submit"
-          className="rounded-full bg-copper text-white px-6 h-11 text-small font-medium hover:bg-copper-600 transition-colors"
-        >
-          {mode === "create" ? "Create product" : "Save changes"}
-        </button>
+        <SubmitButton mode={mode} />
       </div>
     </form>
+  );
+}
+
+function SubmitButton({ mode }: { mode: "create" | "edit" }) {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="inline-flex items-center gap-2 rounded-full bg-copper text-white px-6 h-11 text-small font-medium hover:bg-copper-600 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+    >
+      {pending && <Loader2 className="h-4 w-4 animate-spin" />}
+      {pending
+        ? mode === "create"
+          ? "Creating…"
+          : "Saving…"
+        : mode === "create"
+        ? "Create product"
+        : "Save changes"}
+    </button>
   );
 }
 

@@ -134,7 +134,7 @@ async function nextProductId(): Promise<string> {
 export async function createProduct(formData: FormData) {
   await requireAdmin();
   const supabase = getAdminClient();
-  if (!supabase) return;
+  if (!supabase) redirect("/admin/products?error=db");
 
   const title = String(formData.get("title") ?? "").trim();
   const brandId = String(formData.get("brand_id") ?? "").trim();
@@ -147,7 +147,9 @@ export async function createProduct(formData: FormData) {
   const description =
     String(formData.get("description") ?? "").trim() || null;
 
-  if (!title || !brandId || !brandName || !categoryId || !image) return;
+  if (!title || !brandId || !brandName || !categoryId || !image) {
+    redirect("/admin/products/new?error=missing-fields");
+  }
 
   const slugInput = String(formData.get("slug") ?? "").trim();
   const slug = slugInput ? slugify(slugInput) : slugify(title);
@@ -172,20 +174,24 @@ export async function createProduct(formData: FormData) {
     badges: parseBadges(formData),
     ...prices,
   });
-  if (error) return;
+  if (error) {
+    redirect(
+      `/admin/products/new?error=${encodeURIComponent(error.message)}`
+    );
+  }
 
   revalidatePath("/admin/products");
   revalidatePath("/");
-  redirect(`/admin/products/${id}/edit`);
+  redirect(`/admin/products/${id}/edit?saved=1`);
 }
 
 export async function updateProductFull(formData: FormData) {
   await requireAdmin();
   const supabase = getAdminClient();
-  if (!supabase) return;
+  if (!supabase) redirect("/admin/products?error=db");
 
   const id = String(formData.get("id") ?? "");
-  if (!id) return;
+  if (!id) redirect("/admin/products?error=missing-id");
 
   const title = String(formData.get("title") ?? "").trim();
   const brandId = String(formData.get("brand_id") ?? "").trim();
@@ -199,9 +205,11 @@ export async function updateProductFull(formData: FormData) {
   const slugInput = String(formData.get("slug") ?? "").trim();
   const prices = readPriceFields(formData);
 
-  if (!title || !brandId || !brandName || !categoryId) return;
+  if (!title || !brandId || !brandName || !categoryId) {
+    redirect(`/admin/products/${id}/edit?error=missing-fields`);
+  }
 
-  await supabase
+  const { error } = await supabase
     .from("products")
     .update({
       title,
@@ -220,9 +228,16 @@ export async function updateProductFull(formData: FormData) {
     })
     .eq("id", id);
 
+  if (error) {
+    redirect(
+      `/admin/products/${id}/edit?error=${encodeURIComponent(error.message)}`
+    );
+  }
+
   revalidatePath(`/admin/products/${id}/edit`);
   revalidatePath("/admin/products");
   revalidatePath(`/products/${id}`);
+  redirect(`/admin/products/${id}/edit?saved=1`);
 }
 
 export async function deleteProduct(formData: FormData) {

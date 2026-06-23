@@ -1,11 +1,15 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, XCircle } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/guard";
 import { listBrandsLite, listCategoriesLite } from "@/lib/admin/queries";
 import { createProduct } from "@/lib/admin/actions";
 import { ProductForm } from "@/components/admin/product-form";
 
-export default async function NewProductPage() {
+export default async function NewProductPage({
+  searchParams,
+}: {
+  searchParams: { error?: string };
+}) {
   await requireAdmin();
   const [brands, categories] = await Promise.all([
     listBrandsLite(),
@@ -29,6 +33,20 @@ export default async function NewProductPage() {
           manage the gallery on the edit screen.
         </p>
       </div>
+
+      {searchParams.error && (
+        <div className="flex items-start gap-2.5 rounded-lg border border-carmine/30 bg-carmine/5 p-4 text-small text-graphite">
+          <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-carmine" />
+          <div>
+            <p className="font-medium">Couldn&apos;t create product</p>
+            <p className="mt-0.5 text-graphite-400">
+              {searchParams.error === "missing-fields"
+                ? "Please fill the required fields: title, brand, category, image URL."
+                : searchParams.error}
+            </p>
+          </div>
+        </div>
+      )}
 
       {brands.length === 0 || categories.length === 0 ? (
         <div className="rounded-xl border border-mist bg-white p-10 text-center">
