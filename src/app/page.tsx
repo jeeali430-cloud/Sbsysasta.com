@@ -13,6 +13,7 @@ import { Testimonials } from "@/components/home/testimonials";
 import { FAQ, homepageFAQs } from "@/components/home/faq";
 import { buildMetadata } from "@/lib/seo";
 import { site } from "@/data/site";
+import { getFeaturedProducts } from "@/lib/repo/products";
 
 export const metadata = buildMetadata({
   title: `${site.name} — Home Appliances & Electronics in Lahore, Pakistan`,
@@ -31,12 +32,23 @@ const faqJsonLd = {
   })),
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featuredList = await getFeaturedProducts();
+  const featured = featuredList[0];
+  const heroProduct = featured
+    ? {
+        slug: featured.slug,
+        title: featured.title,
+        image: featured.image,
+        price: featured.price,
+        originalPrice: featured.originalPrice,
+      }
+    : undefined;
   return (
     <>
       <Header />
       <main id="main-content">
-        <Hero />
+        <Hero featured={heroProduct} />
         <TrustStrip />
         <CategoryGrid />
         <FeaturedProducts />

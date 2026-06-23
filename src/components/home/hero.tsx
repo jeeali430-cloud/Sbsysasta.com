@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 import {
   motion,
@@ -17,7 +18,31 @@ import { formatPKR } from "@/lib/utils";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export function Hero() {
+type FeaturedProduct = {
+  slug: string;
+  title: string;
+  image: string;
+  price: number;
+  originalPrice?: number;
+};
+
+const FALLBACK_PRODUCT: FeaturedProduct = {
+  slug: "",
+  title: "Haier 1.5 Ton Inverter AC",
+  image:
+    "https://images.unsplash.com/photo-1631545806609-e1cb04b7d908?w=900&q=85&auto=format&fit=crop",
+  price: 189500,
+  originalPrice: 215000,
+};
+
+export function Hero({ featured }: { featured?: FeaturedProduct }) {
+  const product = featured ?? FALLBACK_PRODUCT;
+  const discountPct = product.originalPrice
+    ? Math.round(
+        ((product.originalPrice - product.price) / product.originalPrice) * 100
+      )
+    : null;
+
   const reduced = useReducedMotion();
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -195,16 +220,19 @@ export function Hero() {
                   className="absolute inset-x-8 bottom-0 h-6 rounded-[50%] bg-graphite/10 blur-2xl"
                   aria-hidden
                 />
-                <div className="relative h-full w-full rounded-2xl border border-mist bg-white/40 backdrop-blur-sm shadow-glow overflow-hidden">
+                <Link
+                  href={product.slug ? `/products/${product.slug}` : "#"}
+                  className="relative h-full w-full rounded-2xl border border-mist bg-white backdrop-blur-sm shadow-glow overflow-hidden block"
+                >
                   <Image
-                    src="https://images.unsplash.com/photo-1631545806609-e1cb04b7d908?w=900&q=85&auto=format&fit=crop"
-                    alt="Haier 1.5 Ton Inverter AC — featured at Sbsysasta Lahore"
+                    src={product.image}
+                    alt={`${product.title} — featured at Sbsysasta Lahore`}
                     fill
                     priority
                     sizes="(min-width: 1024px) 460px, 80vw"
-                    className="object-cover"
+                    className="object-contain p-6"
                   />
-                </div>
+                </Link>
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -215,19 +243,25 @@ export function Hero() {
                   <p className="text-caption uppercase tracking-[0.14em] text-copper">
                     Editor&apos;s pick
                   </p>
-                  <p className="mt-1 font-display text-h3 font-medium text-graphite">
-                    Haier 1.5 Ton Inverter AC
+                  <p className="mt-1 font-display text-h3 font-medium text-graphite line-clamp-1">
+                    {product.title}
                   </p>
-                  <div className="mt-1 flex items-baseline gap-2">
+                  <div className="mt-1 flex items-baseline gap-2 flex-wrap">
                     <span className="font-display text-h2 font-semibold text-graphite">
-                      {formatPKR(189500)}
+                      {formatPKR(product.price)}
                     </span>
-                    <span className="text-caption line-through text-graphite-300">
-                      {formatPKR(215000)}
-                    </span>
-                    <span className="rounded-full bg-graphite px-2 py-0.5 text-caption font-medium text-white">
-                      -12%
-                    </span>
+                    {product.originalPrice && product.originalPrice > product.price && (
+                      <>
+                        <span className="text-caption line-through text-graphite-300">
+                          {formatPKR(product.originalPrice)}
+                        </span>
+                        {discountPct && discountPct > 0 && (
+                          <span className="rounded-full bg-graphite px-2 py-0.5 text-caption font-medium text-white">
+                            -{discountPct}%
+                          </span>
+                        )}
+                      </>
+                    )}
                   </div>
                 </motion.div>
               </motion.div>
