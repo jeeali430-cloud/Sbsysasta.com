@@ -62,8 +62,7 @@ export async function updateProduct(formData: FormData) {
     })
     .eq("id", id);
 
-  revalidatePath("/admin/products");
-  revalidatePath(`/products/${id}`);
+  revalidatePath("/", "layout");
 }
 
 const VALID_BADGES = new Set(["featured", "bestseller", "new", "deal"]);
@@ -180,8 +179,7 @@ export async function createProduct(formData: FormData) {
     );
   }
 
-  revalidatePath("/admin/products");
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   redirect(`/admin/products/${id}/edit?saved=1`);
 }
 
@@ -234,9 +232,7 @@ export async function updateProductFull(formData: FormData) {
     );
   }
 
-  revalidatePath(`/admin/products/${id}/edit`);
-  revalidatePath("/admin/products");
-  revalidatePath(`/products/${id}`);
+  revalidatePath("/", "layout");
   redirect(`/admin/products/${id}/edit?saved=1`);
 }
 
@@ -247,7 +243,7 @@ export async function deleteProduct(formData: FormData) {
   const supabase = getAdminClient();
   if (!supabase) return;
   await supabase.from("products").delete().eq("id", id);
-  revalidatePath("/admin/products");
+  revalidatePath("/", "layout");
   redirect("/admin/products");
 }
 
@@ -297,8 +293,7 @@ export async function uploadProductImage(formData: FormData) {
     })
     .eq("id", productId);
 
-  revalidatePath(`/admin/products/${productId}/edit`);
-  revalidatePath(`/products/${productId}`);
+  revalidatePath("/", "layout");
 }
 
 export async function setPrimaryImage(formData: FormData) {
@@ -309,8 +304,7 @@ export async function setPrimaryImage(formData: FormData) {
   const url = String(formData.get("url") ?? "");
   if (!id || !url) return;
   await supabase.from("products").update({ image: url }).eq("id", id);
-  revalidatePath(`/admin/products/${id}/edit`);
-  revalidatePath(`/products/${id}`);
+  revalidatePath("/", "layout");
 }
 
 export async function removeGalleryImage(formData: FormData) {
@@ -336,7 +330,7 @@ export async function removeGalleryImage(formData: FormData) {
     .from("products")
     .update({ gallery: nextGallery, image: nextImage })
     .eq("id", id);
-  revalidatePath(`/admin/products/${id}/edit`);
+  revalidatePath("/", "layout");
 }
 
 export async function setReviewStatus(formData: FormData) {
