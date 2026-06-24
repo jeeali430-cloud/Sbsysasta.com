@@ -84,7 +84,7 @@ export function Hero({ featured }: { featured?: FeaturedProduct }) {
       />
 
       <Container className="relative">
-        <div className="grid gap-12 py-20 sm:py-24 lg:grid-cols-12 lg:gap-8 lg:py-32">
+        <div className="grid gap-10 py-10 sm:py-12 lg:grid-cols-12 lg:gap-8 lg:py-16">
           <motion.div
             className="lg:col-span-7 flex flex-col justify-center"
             initial="hidden"
