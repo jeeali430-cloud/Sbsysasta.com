@@ -20,6 +20,7 @@ export async function CategoryGrid() {
       eyebrow="Shop by category"
       title="Everything for a Pakistani home."
       subtitle="From the rasoi to the drawing room — the brands you trust, at prices you can verify."
+      className="!py-4 sm:!py-6 lg:!py-8"
     >
       <RevealStagger className="grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
         {categories.map((c, i) => (
