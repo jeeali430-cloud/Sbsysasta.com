@@ -15,6 +15,7 @@ export async function FeaturedProducts() {
       eyebrow="Featured this week"
       title="Hand-picked, in stock, ready to ship."
       subtitle="Our team checks pricing and stock every morning. If it's listed here, it's available — and we'll send it out today inside Lahore."
+      className="!py-4 sm:!py-6 lg:!py-8"
     >
       <RevealStagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {featured.map((p) => (
