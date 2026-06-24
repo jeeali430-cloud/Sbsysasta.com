@@ -10,7 +10,7 @@ export async function DailyDeals() {
   const deals = await getDealProducts();
 
   return (
-    <section className="relative overflow-hidden bg-graphite py-20 text-porcelain sm:py-24">
+    <section className="relative overflow-hidden bg-graphite py-4 text-porcelain sm:py-6 lg:py-8">
       <div
         className="absolute -top-32 right-0 h-96 w-96 rounded-full bg-copper/20 blur-3xl"
         aria-hidden
@@ -40,7 +40,7 @@ export async function DailyDeals() {
           </Link>
         </Reveal>
 
-        <RevealStagger className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <RevealStagger className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {deals.slice(0, 4).map((p) => (
             <RevealItem key={p.id}>
               <ProductCard product={p} />
