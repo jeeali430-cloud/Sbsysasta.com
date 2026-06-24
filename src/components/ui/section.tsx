@@ -26,10 +26,10 @@ export function Section({
         : "bg-porcelain";
 
   return (
-    <section id={id} className={cn("py-16 sm:py-20 lg:py-28", bgClass, className)}>
+    <section id={id} className={cn("py-8 sm:py-10 lg:py-14", bgClass, className)}>
       <Container>
         {(eyebrow || title || subtitle) && (
-          <div className="mb-10 sm:mb-14 max-w-2xl">
+          <div className="mb-6 sm:mb-8 max-w-2xl">
             {eyebrow && (
               <p className="text-caption uppercase tracking-[0.18em] text-copper font-medium mb-3">
                 {eyebrow}
